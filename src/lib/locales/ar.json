@@ -1,0 +1,90 @@
+{
+  "site": {
+    "name": "دكتور أكاديمي",
+    "tagline": "رحلتك التعليمية تبدأ هنا",
+    "description": "منصة تعليمية متكاملة للمستقبل"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "secondary": "الثانوية",
+    "university": "الجامعة",
+    "programming": "البرمجة",
+    "about": "عن المنصة",
+    "login": "دخول",
+    "register": "تسجيل",
+    "language": "English",
+    "emirates": "طلبة الإمارات"
+  },
+  "auth": {
+    "welcome": "مرحباً بك في دكتور أكاديمي",
+    "email": "البريد الإلكتروني (جوجل)",
+    "age": "العمر",
+    "selectSection": "اختر المنهج الدراسي",
+    "secondary": "الثانوية",
+    "university": "الجامعة",
+    "programming": "البرمجة",
+    "guardianPhone": "رقم ولي الأمر (مطلوب)",
+    "submit": "تسجيل",
+    "haveAccount": "لديك حساب؟ تسجيل دخول",
+    "loginTitle": "تسجيل الدخول إلى حسابك",
+    "loginBtn": "دخول"
+  },
+  "sections": {
+    "secondaryTitle": "المرحلة الثانوية",
+    "secondaryDesc": "اختر الشعبة",
+    "languages": "مدارس لغات",
+    "arabic": "عربي",
+    "subjects": "المواد",
+    "physics": "فيزياء",
+    "chemistry": "كيمياء",
+    "math": "رياضيات",
+    "biology": "أحياء"
+  },
+  "games": {
+    "chemistryGame": "لعبة التفاعلات الكيميائية",
+    "chemistryLab": "التجارب المعملية للكيمياء",
+    "physicsGame": "لعبة التجارب الفيزيائية",
+    "tryNow": "جرب الآن",
+    "watchExperiment": "شاهد التجربة"
+  },
+  "doctors": {
+    "drLoaie": "د. لؤي حسين",
+    "drRahma": "د. رحمة سلامة",
+    "drMohamed": "د. محمد أيمن"
+  },
+  "meetings": {
+    "title": "الجلسات المباشرة",
+    "bookNow": "احجز الآن",
+    "price": "سعر الجلسة",
+    "zoomLink": "انضم لمحاضرة زووم"
+  },
+  "emirates": {
+    "title": "طلبة الإمارات",
+    "g9": "الصف التاسع",
+    "g10": "الصف العاشر",
+    "g11": "الصف الحادي عشر",
+    "g12": "الصف الثاني عشر",
+    "bankTransfer": "حوالة بنكية",
+    "bankAccount": "رقم الحساب: 16608525001"
+  },
+  "university": {
+    "basic": "العلوم الأساسية",
+    "programming": "البرمجة",
+    "python": "بايثون",
+    "cpp": "سي بلس بلس",
+    "dataStructure": "هياكل البيانات"
+  },
+  "payment": {
+    "title": "إتمام عملية الدفع",
+    "vodafoneCash": "فودافون كاش",
+    "etisalatCash": "اتصالات كاش",
+    "instaPay": "إنستا باي",
+    "confirmPayment": "تأكيد الدفع",
+    "phoneNumber": "01148636841"
+  },
+  "footer": {
+    "rights": "© 2026 دكتور أكاديمي - جميع الحقوق محفوظة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الاستخدام"
+  }
+}

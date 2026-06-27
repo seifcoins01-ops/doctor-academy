@@ -1,0 +1,90 @@
+{
+  "site": {
+    "name": "Doctor Academy",
+    "tagline": "Your Educational Journey Starts Here",
+    "description": "An integrated educational platform for the future"
+  },
+  "nav": {
+    "home": "Home",
+    "secondary": "Secondary",
+    "university": "University",
+    "programming": "Programming",
+    "about": "About Us",
+    "login": "Login",
+    "register": "Register",
+    "language": "العربية",
+    "emirates": "Emirates Students"
+  },
+  "auth": {
+    "welcome": "Welcome to Doctor Academy",
+    "email": "Email (Google)",
+    "age": "Age",
+    "selectSection": "Select Section",
+    "secondary": "Secondary",
+    "university": "University",
+    "programming": "Programming",
+    "guardianPhone": "Guardian Phone Number (Required)",
+    "submit": "Register",
+    "haveAccount": "Already have an account? Login",
+    "loginTitle": "Login to your account",
+    "loginBtn": "Login"
+  },
+  "sections": {
+    "secondaryTitle": "Secondary Stage",
+    "secondaryDesc": "Choose your track",
+    "languages": "Language Schools",
+    "arabic": "Arabic",
+    "subjects": "Subjects",
+    "physics": "Physics",
+    "chemistry": "Chemistry",
+    "math": "Math",
+    "biology": "Biology"
+  },
+  "games": {
+    "chemistryGame": "Chemical Reactions Game",
+    "chemistryLab": "Chemistry Lab Experiments",
+    "physicsGame": "Physics Experiments Game",
+    "tryNow": "Try Now",
+    "watchExperiment": "Watch Experiment"
+  },
+  "doctors": {
+    "drLoaie": "Dr. Loaie Hussein",
+    "drRahma": "Dr. Rahma Salama",
+    "drMohamed": "Dr. Mohamed Ayman"
+  },
+  "meetings": {
+    "title": "Live Sessions",
+    "bookNow": "Book Now",
+    "price": "Session Price",
+    "zoomLink": "Join Zoom Meeting"
+  },
+  "emirates": {
+    "title": "Emirates Students",
+    "g9": "Grade 9",
+    "g10": "Grade 10",
+    "g11": "Grade 11",
+    "g12": "Grade 12",
+    "bankTransfer": "Bank Transfer",
+    "bankAccount": "Account Number: 16608525001"
+  },
+  "university": {
+    "basic": "Basic Sciences",
+    "programming": "Programming",
+    "python": "Python",
+    "cpp": "C++",
+    "dataStructure": "Data Structure"
+  },
+  "payment": {
+    "title": "Complete Payment",
+    "vodafoneCash": "Vodafone Cash",
+    "etisalatCash": "Etisalat Cash",
+    "instaPay": "InstaPay",
+    "confirmPayment": "Confirm Payment",
+    "phoneNumber": "01148636841"
+  },
+  "footer": {
+    "rights": "© 2026 Doctor Academy - All Rights Reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  }
+}
