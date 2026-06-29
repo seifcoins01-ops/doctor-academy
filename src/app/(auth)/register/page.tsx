@@ -50,7 +50,7 @@ export default function RegisterPage() {
     }
 
     if (!validateEgyptianPhone(form.phone)) {
-      toast.error(isArabic ? 'رقم الهاتف غير صحيح. يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقم' : 'Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits');
+      toast.error(isArabic ? 'رقم الهاتف غير صحيح' : 'Invalid phone number');
       setLoading(false);
       return;
     }
@@ -68,7 +68,6 @@ export default function RegisterPage() {
     }
 
     try {
-      // إنشاء مفتاح سري عشوائي (6 أرقام)
       const secretKey = Math.floor(100000 + Math.random() * 900000).toString();
 
       const { data, error } = await supabase
@@ -109,8 +108,6 @@ export default function RegisterPage() {
         );
       }
 
-      console.log('Success:', data);
-      
       setTimeout(() => {
         router.push('/');
         router.refresh();
@@ -128,17 +125,11 @@ export default function RegisterPage() {
     <div dir={isArabic ? 'rtl' : 'ltr'} className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">
-            DA
-          </div>
+          <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">DA</div>
         </div>
 
-        <h1 className="text-2xl font-bold text-center text-gray-900 mb-2">
-          {t.auth.welcome}
-        </h1>
-        <p className="text-center text-gray-500 mb-6 text-sm">
-          {t.site.tagline}
-        </p>
+        <h1 className="text-2xl font-bold text-center text-gray-900 mb-2">{t.auth.welcome}</h1>
+        <p className="text-center text-gray-500 mb-6 text-sm">{t.site.tagline}</p>
 
         <GoogleButton />
 
@@ -150,101 +141,33 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isArabic ? 'الاسم الكامل' : 'Full Name'}
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-              placeholder={isArabic ? 'أدخل اسمك الكامل' : 'Enter your full name'}
-              required
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-1">{isArabic ? 'الاسم الكامل' : 'Full Name'}</label>
+            <input type="text" name="fullName" value={form.fullName} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.auth.email}
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-              placeholder="example@gmail.com"
-              required
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.auth.email}</label>
+            <input type="email" name="email" value={form.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isArabic ? 'كلمة المرور' : 'Password'}
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-              placeholder="••••••••"
-              required
-              minLength={6}
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              {isArabic ? '6 أحرف على الأقل' : 'At least 6 characters'}
-            </p>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{isArabic ? 'كلمة المرور' : 'Password'}</label>
+            <input type="password" name="password" value={form.password} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required minLength={6} />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.auth.age}
-            </label>
-            <input
-              type="number"
-              name="age"
-              value={form.age}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-              placeholder="18"
-              required
-              min="10"
-              max="100"
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.auth.age}</label>
+            <input type="number" name="age" value={form.age} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isArabic ? 'رقم الهاتف' : 'Phone Number'}
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-              placeholder="010XXXXXXXX"
-              required
-              maxLength={11}
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              {isArabic ? 'يجب أن يبدأ بـ 010/011/012/015 ويتكون من 11 رقم' : 'Must start with 010/011/012/015 and be 11 digits'}
-            </p>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{isArabic ? 'رقم الهاتف' : 'Phone Number'}</label>
+            <input type="tel" name="phone" value={form.phone} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.auth.selectSection}
-            </label>
-            <select
-              name="section"
-              value={form.section}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-900"
-              required
-            >
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.auth.selectSection}</label>
+            <select name="section" value={form.section} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-900" required>
               <option value="">{isArabic ? '-- اختر --' : '-- Select --'}</option>
               <option value="secondary">{t.auth.secondary}</option>
               <option value="university">{t.auth.university}</option>
@@ -253,16 +176,8 @@ export default function RegisterPage() {
 
           {form.section === 'university' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {isArabic ? 'اختر القسم' : 'Select Department'}
-              </label>
-              <select
-                name="universityType"
-                value={form.universityType}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-900"
-                required
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">{isArabic ? 'اختر القسم' : 'Select Department'}</label>
+              <select name="universityType" value={form.universityType} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-900" required>
                 <option value="">{isArabic ? '-- اختر --' : '-- Select --'}</option>
                 <option value="basic">{t.university.basic}</option>
                 <option value="programming">{t.university.programming}</option>
@@ -272,33 +187,17 @@ export default function RegisterPage() {
 
           {form.section === 'secondary' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {t.auth.guardianPhone}
-              </label>
-              <input
-                type="tel"
-                name="guardianPhone"
-                value={form.guardianPhone}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white"
-                placeholder="010XXXXXXXX"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t.auth.guardianPhone}</label>
+              <input type="tel" name="guardianPhone" value={form.guardianPhone} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 bg-white" required />
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
             {loading ? (isArabic ? 'جاري التسجيل...' : 'Registering...') : t.auth.submit}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          {t.auth.haveAccount}
-        </p>
+        <p className="text-center text-sm text-gray-500 mt-4">{t.auth.haveAccount}</p>
       </div>
     </div>
   );
