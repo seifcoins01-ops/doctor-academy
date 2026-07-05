@@ -5,11 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { useLanguageStore } from '@/store/languageStore';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-import emailjs from '@emailjs/browser';
-
-const EMAILJS_SERVICE_ID = 'service_0lwm793';
-const EMAILJS_TEMPLATE_ID = 'template_جديد'; // حط Template ID الجديد
-const EMAILJS_PUBLIC_KEY = 'GZHtebHLm6KTI7Y7O';
 
 export default function SettingsPage() {
   const { t, language } = useLanguageStore();
@@ -25,7 +20,6 @@ export default function SettingsPage() {
   useEffect(() => {
     const saved = localStorage.getItem('user');
     if (saved) setUser(JSON.parse(saved));
-    emailjs.init(EMAILJS_PUBLIC_KEY);
   }, []);
 
   const handleSendCode = async () => {
@@ -33,6 +27,12 @@ export default function SettingsPage() {
       toast.error(isArabic ? 'برجاء إدخال الإيميل' : 'Please enter email');
       return;
     }
+
+    if (email !== user?.email) {
+      toast.error(isArabic ? 'هذا الإيميل غير مطابق لحسابك' : 'Email does not match your account');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -46,22 +46,14 @@ export default function SettingsPage() {
 
       if (dbError) throw dbError;
 
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email: email,
-          code: resetCode,
-        }
-      );
-
       toast.success(
-        isArabic ? 'تم إرسال الكود إلى إيميلك' : 'Code sent to your email'
+        isArabic ? `الكود: ${resetCode}` : `Code: ${resetCode}`,
+        { duration: 15000 }
       );
 
       setStep(2);
     } catch (error: any) {
-      toast.error(isArabic ? 'فشل إرسال الكود' : 'Failed to send code');
+      toast.error(isArabic ? 'فشل' : 'Failed');
     } finally {
       setLoading(false);
     }
@@ -169,8 +161,8 @@ export default function SettingsPage() {
                 <>
                   <p className="text-sm text-gray-600 mb-4">
                     {isArabic 
-                      ? 'أدخل إيميلك وسنرسل لك كود تحقق'
-                      : 'Enter your email and we will send you a verification code'}
+                      ? 'أدخل إيميلك المسجل به في المنصة'
+                      : 'Enter the email registered on the platform'}
                   </p>
                   <input
                     type="email"
@@ -184,7 +176,7 @@ export default function SettingsPage() {
                     disabled={loading}
                     className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
                   >
-                    {loading ? '...' : isArabic ? 'إرسال الكود' : 'Send Code'}
+                    {loading ? '...' : isArabic ? 'إنشاء الكود' : 'Generate Code'}
                   </button>
                 </>
               )}
@@ -193,8 +185,8 @@ export default function SettingsPage() {
                 <>
                   <p className="text-sm text-gray-600 mb-4">
                     {isArabic 
-                      ? 'أدخل الكود المرسل إلى إيميلك'
-                      : 'Enter the code sent to your email'}
+                      ? 'أدخل الكود الذي ظهر'
+                      : 'Enter the code shown'}
                   </p>
                   <input
                     type="text"
@@ -214,7 +206,7 @@ export default function SettingsPage() {
                     onClick={() => { setStep(1); setCode(''); }}
                     className="w-full text-blue-600 hover:underline text-sm"
                   >
-                    {isArabic ? 'إعادة إرسال الكود' : 'Resend code'}
+                    {isArabic ? 'إعادة المحاولة' : 'Try again'}
                   </button>
                 </>
               )}
