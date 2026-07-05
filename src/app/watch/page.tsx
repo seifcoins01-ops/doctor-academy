@@ -29,6 +29,7 @@ export default function WatchPage() {
         .from('user_access')
         .select('*')
         .eq('user_id', user.id)
+        .gte('expires_at', new Date().toISOString())
         .single();
 
       if (data) {
@@ -40,7 +41,6 @@ export default function WatchPage() {
     checkAccess();
   }, [user]);
 
-  // منع الخروج من الصفحة
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -104,7 +104,7 @@ export default function WatchPage() {
             <span>|</span>
             <span>📅 60 دقيقة</span>
             <span>|</span>
-            <span className="text-green-400">✅ تم الشراء</span>
+            <span className="text-green-400">✅ تم الشراء - تنتهي الصلاحية بعد 7 أيام</span>
           </div>
           <div className="mt-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
             <p className="text-yellow-400 text-sm flex items-center gap-2">
