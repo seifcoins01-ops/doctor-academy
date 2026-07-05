@@ -48,6 +48,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Phone number does not match' });
     }
 
+    // تحقق من المفتاح المستخدم
     const { data: usedKey } = await supabase
       .from('used_keys')
       .select('*')
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'This secret key has already been used' });
     }
 
+    // سجل الدفع
     await supabase.from('payments').insert({
       user_id: userId,
       content_id: lessonId,
@@ -69,18 +71,28 @@ export async function POST(request: Request) {
       status: 'completed',
     });
 
+    // سجل المفتاح كمستخدم
     await supabase.from('used_keys').insert({
       user_id: userId,
       secret_key: secretKey,
     });
 
+    // انشئ مفتاح جديد
     const newSecretKey = Math.floor(100000 + Math.random() * 900000).toString();
-    await supabase.from('users').update({
-      secret_key: newSecretKey,
-      failed_attempts: 0,
-      locked_until: null,
-    }).eq('id', userId);
+    
+    const { error: updateError } = await supabase.from('users')
+      .update({
+        secret_key: newSecretKey,
+        failed_attempts: 0,
+        locked_until: null,
+      })
+      .eq('id', userId);
 
+    if (updateError) {
+      console.error('Update secret key error:', updateError);
+    }
+
+    // أضف صلاحية المشاهدة (7 أيام)
     await supabase.from('user_access').insert({
       user_id: userId,
       content_id: lessonId,
@@ -90,6 +102,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: 'Payment verified successfully',
+      newSecretKey: newSecretKey,
     });
     
   } catch (error: any) {
