@@ -5,13 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { useLanguageStore } from '@/store/languageStore';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-import emailjs from '@emailjs/browser';
-
-// @ts-nocheck
-
-const EMAILJS_SERVICE_ID = 'service_cdh5dm8';
-const EMAILJS_TEMPLATE_ID = 'template_m9kl0k3';
-const EMAILJS_PUBLIC_KEY = 'GZHtebHLm6KTI7Y7O';
 
 export default function SettingsPage() {
   const { t, language } = useLanguageStore();
@@ -27,7 +20,6 @@ export default function SettingsPage() {
   useEffect(() => {
     const saved = localStorage.getItem('user');
     if (saved) setUser(JSON.parse(saved));
-    emailjs.init(EMAILJS_PUBLIC_KEY);
   }, []);
 
   const handleSendCode = async () => {
@@ -40,22 +32,22 @@ export default function SettingsPage() {
     try {
       const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-      const { error } = await supabase.from('reset_codes').insert({
+      const { error: dbError } = await supabase.from('reset_codes').insert({
         user_id: user?.id,
         code: resetCode,
         expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
       });
 
-      if (error) throw error;
+      if (dbError) throw dbError;
 
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email: email,
-          code: resetCode,
-        }
-      );
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          shouldCreateUser: false,
+        },
+      });
+
+      if (error) throw error;
 
       toast.success(
         isArabic ? 'تم إرسال الكود إلى إيميلك' : 'Code sent to your email'
@@ -63,7 +55,6 @@ export default function SettingsPage() {
 
       setStep(2);
     } catch (error: any) {
-      console.error(error);
       toast.error(isArabic ? 'فشل إرسال الكود' : 'Failed to send code');
     } finally {
       setLoading(false);
@@ -203,7 +194,7 @@ export default function SettingsPage() {
                     type="text"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="w-full px-4 py-3 border rounded-lg text-gray-900 text-2xl tracking-widest text-center font-bold"
+                    className="w-full px-4 py-3 border rounded-lg text-gray-900 text-2xl tracking-widist text-center font-bold"
                     placeholder="••••••"
                     maxLength={6}
                   />
