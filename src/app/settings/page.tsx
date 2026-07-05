@@ -5,6 +5,11 @@ import { supabase } from '@/lib/supabase';
 import { useLanguageStore } from '@/store/languageStore';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = 'service_0lwm793';
+const EMAILJS_TEMPLATE_ID = 'template_جديد'; // حط Template ID الجديد
+const EMAILJS_PUBLIC_KEY = 'GZHtebHLm6KTI7Y7O';
 
 export default function SettingsPage() {
   const { t, language } = useLanguageStore();
@@ -20,6 +25,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const saved = localStorage.getItem('user');
     if (saved) setUser(JSON.parse(saved));
+    emailjs.init(EMAILJS_PUBLIC_KEY);
   }, []);
 
   const handleSendCode = async () => {
@@ -40,15 +46,22 @@ export default function SettingsPage() {
 
       if (dbError) throw dbError;
 
-      toast.success(
-        isArabic ? `تم إنشاء الكود` : `Code generated`,
-        { duration: 3000 }
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          to_email: email,
+          code: resetCode,
+        }
       );
-      
-      setCode(resetCode);
+
+      toast.success(
+        isArabic ? 'تم إرسال الكود إلى إيميلك' : 'Code sent to your email'
+      );
+
       setStep(2);
     } catch (error: any) {
-      toast.error(isArabic ? 'فشل' : 'Failed');
+      toast.error(isArabic ? 'فشل إرسال الكود' : 'Failed to send code');
     } finally {
       setLoading(false);
     }
