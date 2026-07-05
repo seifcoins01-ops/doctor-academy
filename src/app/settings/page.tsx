@@ -40,22 +40,15 @@ export default function SettingsPage() {
 
       if (dbError) throw dbError;
 
-      const { error } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          shouldCreateUser: false,
-        },
-      });
-
-      if (error) throw error;
-
       toast.success(
-        isArabic ? 'تم إرسال الكود إلى إيميلك' : 'Code sent to your email'
+        isArabic ? `تم إنشاء الكود` : `Code generated`,
+        { duration: 3000 }
       );
-
+      
+      setCode(resetCode);
       setStep(2);
     } catch (error: any) {
-      toast.error(isArabic ? 'فشل إرسال الكود' : 'Failed to send code');
+      toast.error(isArabic ? 'فشل' : 'Failed');
     } finally {
       setLoading(false);
     }
@@ -194,9 +187,8 @@ export default function SettingsPage() {
                     type="text"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="w-full px-4 py-3 border rounded-lg text-gray-900 text-2xl tracking-widist text-center font-bold"
-                    placeholder="••••••"
-                    maxLength={6}
+                    className="w-full px-4 py-3 border rounded-lg text-gray-900 text-2xl tracking-widest text-center font-bold"
+                    placeholder={isArabic ? 'أدخل الكود' : 'Enter code'}
                   />
                   <button
                     onClick={handleVerifyCode}
